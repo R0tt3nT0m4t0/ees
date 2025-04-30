@@ -1,0 +1,14 @@
+= Execution Environments
+
+== About this repo
+
+Comprehensive Guide to Execution Environments in Ansible Automation Platform (AAP)
+
+== In the future
+
+- You can expect more and more examples to be included but will try to keep it clean to avoid making it too cumbersome
+
+== What to do next?
+
+> Enjoy!
+
