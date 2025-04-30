@@ -1,0 +1,61 @@
+---
+version: 3
+
+options:
+  package_manager_path: /usr/bin/microdnf
+
+build_arg_defaults:
+  ANSIBLE_GALAXY_CLI_COLLECTION_OPTS: ""
+
+images:
+  base_image:
+    name: 'registry.redhat.io/ansible-automation-platform-25/ee-minimal-rhel9:latest'
+    options:
+      pull_policy: missing
+      tls_verify: false
+
+dependencies:
+  galaxy: requirements.yml
+  python: requirements.txt
+  system: bindep.txt
+
+additional_build_files:
+  - src: dummy.cfg
+    dest: dummy.cfg
+
+additional_build_steps:
+
+  # base stage
+  prepend_base: |
+    RUN microdnf -y upgrade \
+      && microdnf install -y python3-pip python3-devel gcc 
+  append_base: |
+    RUN echo "Base layer image ready!" >> /my_build.log
+
+  # galaxy stage
+  prepend_galaxy: |
+    RUN echo "Current date $(date)" >> /my_build.log
+  append_galaxy: |
+    RUN echo "This is the last message from galaxy stage" >> /my_build.log \
+      && ansible-galaxy collection verify ansible.posix >> /my_build.log \
+      && mv /my_build.log /build/my_build.log
+
+  # builder stage
+  prepend_builder: |
+    ENV PIP_CACHE_DIR=/tmp/pip_cache
+    RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel 
+  append_builder: |
+    RUN rm -rf /tmp/*
+
+  # final stage
+  prepend_final: |
+    RUN ls -l / \
+      && /usr/bin/python3 -m pip install ansible ansible_runner
+  append_final: |
+    RUN microdnf clean all \
+      && rm -rf /var/cache/{dnf,yum} \
+      && rm -rf /var/lib/dnf/history.* \
+      && rm -rf /var/log/dnf.* /var/log/hawkey.log \
+      && rm -rf /var/cache/dnf \
+      && rm -rf /root/.cache
+

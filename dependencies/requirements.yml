@@ -1,0 +1,45 @@
+----
+collections:
+
+# Generic format
+
+  - name: namespace.collection_name  # Required
+     version: 1.2.3                  # Optional (default: latest)
+     source: https://galaxy.ansible.com  # Optional (default: Galaxy server)
+
+# Simple format
+
+  - name: ansible.posix
+     version: 1.5.0   # Adding the version is always recommended to ensure compatibility
+  - name: amazon.aws
+     version: 5.2.0
+
+# The version can use multiple semantics
+  - name: community.general
+     version: ">=5.0.0,<6.0.0"  # ranges
+     version: "1.2.3"           # exact
+     version: ">=2.0.0"         # minimum
+     version: "<4.0.0"          # maximum
+     version: "!=3.1.4"         # exclusion
+
+# Install from Git
+ - name: https://github.com/ansible-collections/namespace.collection.git
+    type: git
+    version: main  # Branch/tag/commit
+
+# Install from tarball/URL
+ - name: file:///path/to/local/collection.tar.gz
+    type: file
+
+# Install with GPG signature verification
+ - name: community.aws
+    version: 4.1.0
+    signature: |
+      -----BEGIN PGP SIGNATURE-----
+      ...
+      -----END PGP SIGNATURE-----
+
+# Excluding dependencies 
+ - name: ansible.utils
+    exclude_dependencies: true
+
