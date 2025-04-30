@@ -1,0 +1,11 @@
+---
+- name: Test Execution Environment
+  hosts: localhost
+  gather_facts: true
+
+  tasks:
+
+    - name: Display OS info
+      ansible.builtin.debug:
+        msg: "Running on {{ ansible_distribution }} {{ ansible_distribution_version }}"
+
