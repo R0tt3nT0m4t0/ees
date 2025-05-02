@@ -4,9 +4,6 @@ git [platform:rpm]
 jq [platform:rpm]
 curl [platform:rpm]
 
+# Architecture-specific packages
 libffi-devel [platform:rpm arch:x86_64]
 libffi-dev [platform:dpkg arch:arm64]
-
-# Fallback if primary package is unavailable
-gcc || gcc-10 [platform:rpm]
-

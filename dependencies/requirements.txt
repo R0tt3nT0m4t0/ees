@@ -16,10 +16,8 @@ botocore~=1.29.0  # Compatible release (>=1.29.0,<1.30.0)
 pyyaml!=5.4.0     # Version exclusion
 
 # Hash Verification
-requests==2.28.0 \
-  --hash=sha256:7f1b6a0a0aa2f5bc6f6a4b7eaf1a5b5c3b0e1b0e1b0e1b0e1b0e1b0e1b0e1b0e1b0e1b0e1b0e
+requests==2.28.0 --hash=sha256:7f1b6a0a0aa2f5bc6f6a4b7eaf1a5b5c3b0e1b0e1b0e1b0e1b0e1b0e1b0e1b0e1b0e1b0e1b0e
 
 # Conditional installations based on environment:
 # Install only on Windows
 pywin32>=300; sys_platform=='win32'
-
